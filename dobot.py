@@ -52,9 +52,9 @@ class Dobot():
 
     def Close(self):
         "Exits the dobot program properly"
-        
-        self.Grip(False)
-        self.Suck(False)
+
+        self._grip(False)
+        self._suck(False)
         self.Disconnect()
 
     def Log(self, message):
@@ -100,7 +100,7 @@ class Dobot():
             )
         )
 
-    def Suck(self, enable: bool, delay_overwrite: Union[float, None] = None):
+    def _suck(self, enable: bool, delay_overwrite: Union[float, None] = None):
         "Toggle state of suction cup"
 
         if not delay_overwrite:
@@ -111,7 +111,7 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
 
-    def Grip(self, enable: bool, delay_overwrite: Union[float, None] = None):
+    def _grip(self, enable: bool, delay_overwrite: Union[float, None] = None):
         "Toggle state of gripping arm"
 
         if not delay_overwrite:
@@ -290,3 +290,9 @@ class Dobot():
                 msg = Message(b)
                 return msg
         return None
+
+    def Delay(self, delay: Optional[float] = None):
+        if delay:
+            sleep(delay)
+        else:
+            sleep(self.delay)
