@@ -8,7 +8,7 @@ port = get_coms_port()
 bot = Dobot(port, True)
 bot.Connect()
 
-posGrab = Position(323.92, -31.75, 17.62, -5.59)
+posGrab = Position(324.22, -31.75, 14.42, -5.59)
 posRelease = Position(173.75, 268.69, 48.04, 57.11)
 posMiddle = Position(239.45, 0.83, 140.17, 0.20)
 
@@ -40,7 +40,13 @@ def main():
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)
-
+            bot.MoveToPosition(posGrab)
+            sucktioncup.Suck()
+            bot.MoveToPosition(posMiddle)
+            bot.MoveToPosition(posRelease)
+            sucktioncup.Blow()
+            sucktioncup.Idle()
+            bot.MoveToPosition(posMiddle)
         sleep(0.1)
 
 
