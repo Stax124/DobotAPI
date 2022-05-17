@@ -18,6 +18,7 @@ sucktioncup = SuctionCup(bot)
 
 def main():
     print("Dobot connected")
+    bot.set_color(False)
     while True:
         # gripper.Open()
         # sleep(0.5)
@@ -26,13 +27,16 @@ def main():
         # gripper.Open()
         # sleep(0.5)
         # gripper.Idle()
-        sucktioncup.Blow()
+        # sucktioncup.Blow()
+        # sleep(0.5)
+        # sucktioncup.Suck()
+        # sleep(0.5)
+        # sucktioncup.Blow()
+        # sleep(0.5)
+        # sucktioncup.Idle()
+        # bot.conveyor_belt(0.1, 1)
+        print(bot.get_color())
         sleep(0.5)
-        sucktioncup.Suck()
-        sleep(0.5)
-        sucktioncup.Blow()
-        sleep(0.5)
-        sucktioncup.Idle()
 
 
 try:

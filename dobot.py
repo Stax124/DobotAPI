@@ -1,10 +1,13 @@
+import math
 from multiprocessing import RLock
 import struct
 from time import sleep
-from typing import Optional
+from typing import Literal, Optional
 import serial
+from xcffib import Union
 from DobotMessage import Message
 from core.dobot_interfaces import GPIO, MODE_PTP, Joints, Pose, Position
+from core.exception_interfaces import DobotException
 
 
 MAX_QUEUE_LEN = 32
@@ -55,6 +58,7 @@ class Dobot():
 
         self._grip(False)
         self._suck(False)
+        self.conveyor_belt(0)
         self.Disconnect()
 
     def Log(self, message):
@@ -121,6 +125,29 @@ class Dobot():
 
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
+
+    def set_color(self, enable=True, port=GPIO.PORT_GP2):
+        msg = Message()
+        msg.id = 137
+        msg.ctrl = 0x03
+        msg.params = bytearray([])
+        msg.params.extend(bytearray([int(enable)]))
+        msg.params.extend(bytearray([port]))
+        return self._extract_cmd_index(self._send_command(msg))
+
+    def get_color(self, port=GPIO.PORT_GP2, version=0x1):
+        msg = Message()
+        msg.id = 137
+        msg.ctrl = 0x01
+        msg.params = bytearray([])
+        msg.params.extend(bytearray([port]))
+        msg.params.extend(bytearray([0x01]))
+        response = self._send_command(msg)
+        print(response)
+        # r = struct.unpack_from('f', response.params, 0)[0]
+        # g = struct.unpack_from('f', response.params, 1)[0]
+        # b = struct.unpack_from('f', response.params, 2)[0]
+        return None
 
     def _extract_cmd_index(self, response):
         return struct.unpack_from('I', response.params, 0)[0]
@@ -217,24 +244,53 @@ class Dobot():
             msg.params.extend(bytearray([0x00]))
         return self._send_command(msg)
 
-    def set_ir(self, enable=True, port=GPIO.PORT_GP4):
-        msg = Message()
-        msg.id = 138
-        msg.ctrl = 0x02
-        msg.params = bytearray([])
-        msg.params.extend(bytearray([int(enable)]))
-        msg.params.extend(bytearray([port]))  # type: ignore
-        return self._extract_cmd_index(self._send_command(msg))
+    # def set_color(self, enable=True, port=GPIO.PORT_GP2, version=0x1):
+    #     msg = Message()
+    #     msg.id = 137
+    #     msg.ctrl = 0x03
+    #     msg.params = bytearray([])
+    #     msg.params.extend(bytearray([int(enable)]))
+    #     msg.params.extend(bytearray([port]))
+    #     msg.params.extend(bytearray([version]))  # Version1=0, Version2=1
+    #     return self._extract_cmd_index(self._send_command(msg))
 
-    def get_ir(self, port=GPIO.PORT_GP4):
+    # def get_color(self, port=GPIO.PORT_GP2, version=0x1):
+    #     msg = Message()
+    #     msg.id = 137
+    #     msg.ctrl = 0x00
+    #     msg.params = bytearray([])
+    #     msg.params.extend(bytearray([port]))
+    #     msg.params.extend(bytearray([0x01]))
+    #     msg.params.extend(bytearray([version]))  # Version1=0, Version2=1
+    #     response = self._send_command(msg)
+    #     print(response)
+    #     r = struct.unpack_from('?', response.params, 0)[0]
+    #     g = struct.unpack_from('?', response.params, 1)[0]
+    #     b = struct.unpack_from('?', response.params, 2)[0]
+    #     return [r, g, b]
+
+    def _set_stepper_motor(self, speed, interface=0, motor_control=True):
         msg = Message()
-        msg.id = 138
-        msg.ctrl = 0x00
+        msg.id = 0x87
+        msg.ctrl = 0x03
         msg.params = bytearray([])
-        msg.params.extend(bytearray([port]))  # type: ignore
-        response = self._send_command(msg)
-        state = struct.unpack_from('?', response.params, 0)[0]
-        return state
+        if interface == 1:
+            msg.params.extend(bytearray([0x01]))
+        else:
+            msg.params.extend(bytearray([0x00]))
+        if motor_control is True:
+            msg.params.extend(bytearray([0x01]))
+        else:
+            msg.params.extend(bytearray([0x00]))
+        msg.params.extend(bytearray(struct.pack('i', int(speed))))
+        return self._send_command(msg)
+
+    def conveyor_belt(self, speed: float, direction: Literal[1, -1] = 1, interface=0):
+        if 0.0 <= speed <= 1.0 and (direction == 1 or direction == -1):
+            motor_speed = 70 * speed * STEP_PER_CIRCLE / MM_PER_CIRCLE * direction
+            self._set_stepper_motor(motor_speed, interface)
+        else:
+            raise DobotException("Wrong Parameter")
 
     def speed(self, velocity=100., acceleration=100.):
         self._set_ptp_common_params(velocity, acceleration)
