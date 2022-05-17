@@ -126,28 +126,28 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
 
-    def set_color(self, enable=True, port=GPIO.PORT_GP2):
+    def set_ir(self, enable=True, port=GPIO.PORT_GP4):
         msg = Message()
-        msg.id = 137
+        msg.id = 138
         msg.ctrl = 0x03
         msg.params = bytearray([])
         msg.params.extend(bytearray([int(enable)]))
         msg.params.extend(bytearray([port]))
+        msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         return self._extract_cmd_index(self._send_command(msg))
 
-    def get_color(self, port=GPIO.PORT_GP2, version=0x1):
+    def get_ir(self, port=GPIO.PORT_GP4):
         msg = Message()
-        msg.id = 137
-        msg.ctrl = 0x01
+        msg.id = 138
+        msg.ctrl = 0x00
         msg.params = bytearray([])
         msg.params.extend(bytearray([port]))
         msg.params.extend(bytearray([0x01]))
+        msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         response = self._send_command(msg)
         print(response)
-        # r = struct.unpack_from('f', response.params, 0)[0]
-        # g = struct.unpack_from('f', response.params, 1)[0]
-        # b = struct.unpack_from('f', response.params, 2)[0]
-        return None
+        state = struct.unpack_from('?', response.params, 0)[0]
+        return state
 
     def _extract_cmd_index(self, response):
         return struct.unpack_from('I', response.params, 0)[0]

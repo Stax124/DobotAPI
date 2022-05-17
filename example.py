@@ -8,17 +8,19 @@ port = get_coms_port()
 bot = Dobot(port, True)
 bot.Connect()
 
-pos1 = Position(188, 5.5, -23, 1.65)
-pos2 = Position(186, 74.3, 77, 21.79)
-pos3 = Position(137.5, 178.3, -17, 52)
+posGrab = Position(323.92, -31.75, 17.62, -5.59)
+posRelease = Position(173.75, 268.69, 48.04, 57.11)
+posMiddle = Position(239.45, 0.83, 140.17, 0.20)
 
 gripper = Gripper(bot)
 sucktioncup = SuctionCup(bot)
 
+moving = False
+
 
 def main():
     print("Dobot connected")
-    bot.set_color(False)
+    bot.set_ir(True)
     while True:
         # gripper.Open()
         # sleep(0.5)
@@ -34,9 +36,12 @@ def main():
         # sucktioncup.Blow()
         # sleep(0.5)
         # sucktioncup.Idle()
-        # bot.conveyor_belt(0.1, 1)
-        print(bot.get_color())
-        sleep(0.5)
+        if(not bot.get_ir()):
+            bot.conveyor_belt(0.25, 1)
+        else:
+            bot.conveyor_belt(0, 1)
+
+        sleep(0.1)
 
 
 try:
