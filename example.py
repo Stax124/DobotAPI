@@ -1,4 +1,5 @@
 from core.effectors.gripper import Gripper
+from core.effectors.suctioncup import SuctionCup
 from dobot import Position, Dobot
 from core.utils import get_coms_port
 from time import sleep
@@ -12,18 +13,26 @@ pos2 = Position(186, 74.3, 77, 21.79)
 pos3 = Position(137.5, 178.3, -17, 52)
 
 gripper = Gripper(bot)
+sucktioncup = SuctionCup(bot)
 
 
 def main():
     print("Dobot connected")
     while True:
-        gripper.Open()
+        # gripper.Open()
+        # sleep(0.5)
+        # gripper.Close()
+        # sleep(0.5)
+        # gripper.Open()
+        # sleep(0.5)
+        # gripper.Idle()
+        sucktioncup.Blow()
         sleep(0.5)
-        gripper.Close()
+        sucktioncup.Suck()
         sleep(0.5)
-        gripper.Open()
+        sucktioncup.Blow()
         sleep(0.5)
-        gripper.Idle()
+        sucktioncup.Idle()
 
 
 try:

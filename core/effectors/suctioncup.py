@@ -11,21 +11,20 @@ class SuctionCup:
 
         self.bot = bot
 
-    def Open(self):
-        "Opens gripper"
-
-        self.bot._grip(False)
-        self.bot.Delay()
-
-    def Close(self):
-        "Closes gripper"
+    def Suck(self):
+        "Starts sucking Air"
 
         self.bot._suck(True)
         self.bot.Delay()
 
-    def Idle(self):
-        "Closes Gripper and setting pneu in idle state"
+    def Blow(self):
+        "Starts blowing Air"
 
-        self.bot._grip(True)
+        self.bot._grip(False)
+        self.bot.Delay()
+
+    def Idle(self):
+        "Disable pneu"
+
         self.bot._suck(False)
         self.bot.Delay()
