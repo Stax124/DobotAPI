@@ -25,8 +25,9 @@ class Dobot():
         self._lock = RLock()
         pass
 
-    def Connect(self):
-        "Connects to dobot\nReturn boolean"
+    def Connect(self) -> bool:
+        "Connects to dobot and returns true if successful"
+
         self.Log("Connecting to dobot")
         self._ser = serial.Serial(
             self.port,
@@ -44,12 +45,14 @@ class Dobot():
 
     def Disconnect(self):
         "Disconnects robot"
+
         self.Log("Disconnecting dobot")
         if(not self._ser == None and self._ser.isOpen()):
             self._ser.close()
 
     def Close(self):
         "Exits the dobot program properly"
+        
         self.Grip(False)
         self.Suck(False)
         self.Disconnect()
