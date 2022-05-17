@@ -145,7 +145,7 @@ class Dobot():
         msg.params.extend(bytearray([0x01]))
         msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         response = self._send_command(msg)
-        print(response)
+        self.Log(response)
         state = struct.unpack_from('?', response.params, 0)[0]
         return state
 

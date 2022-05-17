@@ -2,10 +2,10 @@ from core.effectors.gripper import Gripper
 from core.effectors.suctioncup import SuctionCup
 from dobot import Position, Dobot
 from core.utils import get_coms_port
-from time import sleep
+import time
 
 port = get_coms_port()
-bot = Dobot(port, True)
+bot = Dobot(port, False)
 bot.Connect()
 
 posGrab = Position(324.22, -31.75, 14.42, -5.59)
@@ -21,22 +21,12 @@ moving = False
 def main():
     print("Dobot connected")
     bot.set_ir(True)
-    while True:
-        # gripper.Open()
-        # sleep(0.5)
-        # gripper.Close()
-        # sleep(0.5)
-        # gripper.Open()
-        # sleep(0.5)
-        # gripper.Idle()
-        # sucktioncup.Blow()
-        # sleep(0.5)
-        # sucktioncup.Suck()
-        # sleep(0.5)
-        # sucktioncup.Blow()
-        # sleep(0.5)
-        # sucktioncup.Idle()
+    lastGrab = time.time()
+    max_delay = 20
+
+    while time.time()-lastGrab < max_delay:
         if(not bot.get_ir()):
+            # print(time.time()-lastGrab)
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)
@@ -47,11 +37,20 @@ def main():
             sucktioncup.Blow()
             sucktioncup.Idle()
             bot.MoveToPosition(posMiddle)
-        sleep(0.1)
+            lastGrab = time.time()
+
+        time.sleep(0.1)
+
+    else:
+        print("Ur Mom Gay LOL")
+        bot.MoveToPosition(posMiddle)
+        bot.Close()
+        print("Dobot disconnected")
 
 
 try:
     main()
 except KeyboardInterrupt:
+    bot.MoveToPosition(posMiddle)
     bot.Close()
     print("Dobot disconnected")
