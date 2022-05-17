@@ -1,7 +1,7 @@
 from multiprocessing import RLock
 import struct
 from time import sleep
-from typing import Optional, Union
+from typing import Optional
 import serial
 from DobotMessage import Message
 from core.dobot_interfaces import GPIO, MODE_PTP, Joints, Pose, Position
@@ -61,7 +61,7 @@ class Dobot():
         if(self.log):
             print(message)
 
-    def MoveTo(self, x, y, z, r=0, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Union[float, None] = None):
+    def MoveTo(self, x, y, z, r=0, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None):
         if not delay_overwrite:
             delay_overwrite = self.delay
 
@@ -70,7 +70,7 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(cmd)
 
-    def MoveToPosition(self, position: Position, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Union[float, None] = None):
+    def MoveToPosition(self, position: Position, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None):
         if not delay_overwrite:
             delay_overwrite = self.delay
 
@@ -100,7 +100,7 @@ class Dobot():
             )
         )
 
-    def _suck(self, enable: bool, delay_overwrite: Union[float, None] = None):
+    def _suck(self, enable: bool, delay_overwrite: Optional[float] = None):
         "Toggle state of suction cup"
 
         if not delay_overwrite:
@@ -111,7 +111,7 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
 
-    def _grip(self, enable: bool, delay_overwrite: Union[float, None] = None):
+    def _grip(self, enable: bool, delay_overwrite: Optional[float] = None):
         "Toggle state of gripping arm"
 
         if not delay_overwrite:
