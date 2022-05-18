@@ -1,15 +1,15 @@
-from dobot import Position, Dobot
+from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
 
 port = get_coms_port()
 bot = Dobot(port, False)
-bot.Connect()
+bot.connect()
 
 
 def main():
     print("Dobot connected")
-    bot.set_ir(True)
+    bot.ir_toggle(True)
     lastGrab = time.time()
     max_delay = 20
 
@@ -25,5 +25,5 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    bot.Close()
+    bot.close()
     print("Dobot disconnected")

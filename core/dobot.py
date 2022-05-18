@@ -1,13 +1,13 @@
-import math
 from multiprocessing import RLock
 import struct
 from time import sleep
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 import serial
-from xcffib import Union
-from DobotMessage import Message
+from core.DobotMessage import Message
 from core.dobot_interfaces import GPIO, MODE_PTP, Joints, Pose, Position
 from core.exception_interfaces import DobotException
+from core.effectors.gripper import Gripper
+from core.effectors.suctioncup import SuctionCup
 
 
 MAX_QUEUE_LEN = 32
@@ -16,22 +16,23 @@ MM_PER_CIRCLE = 3.1415926535898 * 36.0
 
 
 class Dobot():
-    "Dobot arm class\nUsage: var = Dobot(port)"
+    "Class for controlling Dobot Magician and it's accessories"
 
-    def __init__(self, port, log=True, execution_delay: float = 1.5) -> None:
-        "Constructor"
-        self.log = log
+    def __init__(self, port: str, enable_logging: bool = True, execution_delay: float = 1.5) -> None:
+        self.enable_logging = enable_logging
         self.port = port
-        self.delay = execution_delay
-        self.Log("Dobot on port: " + port)
-        self._ser = None
+        self.sleep_delay = execution_delay
+        self.gripper = Gripper(self)
+        self.suction_cup = SuctionCup(self)
+        self.log("Dobot on port: " + port)
+        self._ser = serial.Serial()
         self._lock = RLock()
         pass
 
-    def Connect(self) -> bool:
+    def connect(self) -> bool:
         "Connects to dobot and returns true if successful"
 
-        self.Log("Connecting to dobot")
+        self.log("Connecting to dobot")
         self._ser = serial.Serial(
             self.port,
             baudrate=115200,
@@ -46,37 +47,37 @@ class Dobot():
         self._set_ptp_common_params(velocity=100, acceleration=100)
         return self._ser.isOpen()
 
-    def Disconnect(self):
+    def disconnect(self) -> None:
         "Disconnects robot"
 
-        self.Log("Disconnecting dobot")
+        self.log("Disconnecting dobot")
         if(not self._ser == None and self._ser.isOpen()):
             self._ser.close()
 
-    def Close(self):
+    def close(self) -> None:
         "Exits the dobot program properly"
 
         self._grip(False)
         self._suck(False)
         self.conveyor_belt(0)
-        self.Disconnect()
+        self.disconnect()
 
-    def Log(self, message):
-        if(self.log):
+    def log(self, message: str) -> None:
+        if(self.enable_logging):
             print(message)
 
-    def MoveTo(self, x, y, z, r=0, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None):
+    def move_to(self, x: float, y: float, z: float, r: float = 0., mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         if not delay_overwrite:
-            delay_overwrite = self.delay
+            delay_overwrite = self.sleep_delay
 
         cmd = self._set_ptp_cmd(x, y, z, r, mode)
 
         sleep(delay_overwrite)
         return self._extract_cmd_index(cmd)
 
-    def MoveToPosition(self, position: Position, mode=MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None):
+    def move_to_position(self, position: Position, mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         if not delay_overwrite:
-            delay_overwrite = self.delay
+            delay_overwrite = self.sleep_delay
 
         cmd = self._set_ptp_cmd(position.x, position.y,
                                 position.z, position.rotation, mode)
@@ -84,7 +85,7 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(cmd)
 
-    def GetPose(self) -> Pose:
+    def get_pose(self) -> Pose:
         msg = Message()
         msg.id = 10
         response = self._send_command(msg)
@@ -104,29 +105,31 @@ class Dobot():
             )
         )
 
-    def _suck(self, enable: bool, delay_overwrite: Optional[float] = None):
+    def _suck(self, enable: bool, delay_overwrite: Optional[float] = None) -> Any:
         "Toggle state of suction cup"
 
         if not delay_overwrite:
-            delay_overwrite = self.delay
+            delay_overwrite = self.sleep_delay
 
         response = self._set_end_effector_suction_cup(enable)
 
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
 
-    def _grip(self, enable: bool, delay_overwrite: Optional[float] = None):
+    def _grip(self, enable: bool, delay_overwrite: Optional[float] = None) -> Any:
         "Toggle state of gripping arm"
 
         if not delay_overwrite:
-            delay_overwrite = self.delay
+            delay_overwrite = self.sleep_delay
 
         response = self._set_end_effector_gripper(enable)
 
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
 
-    def set_ir(self, enable=True, port=GPIO.PORT_GP4):
+    def ir_toggle(self, enable: bool = True, port: GPIO = GPIO.PORT_GP4) -> Any:
+        "Turn the IR sensor on or off"
+
         msg = Message()
         msg.id = 138
         msg.ctrl = 0x03
@@ -136,7 +139,9 @@ class Dobot():
         msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         return self._extract_cmd_index(self._send_command(msg))
 
-    def get_ir(self, port=GPIO.PORT_GP4):
+    def get_ir(self, port: GPIO = GPIO.PORT_GP4) -> bool:
+        "Check if IR sensor is triggered"
+
         msg = Message()
         msg.id = 138
         msg.ctrl = 0x00
@@ -145,14 +150,14 @@ class Dobot():
         msg.params.extend(bytearray([0x01]))
         msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         response = self._send_command(msg)
-        self.Log(response)
+        self.log(str(response))
         state = struct.unpack_from('?', response.params, 0)[0]
         return state
 
-    def _extract_cmd_index(self, response):
+    def _extract_cmd_index(self, response: Message) -> Any:
         return struct.unpack_from('I', response.params, 0)[0]
 
-    def _set_ptp_cmd(self, x, y, z, r, mode):
+    def _set_ptp_cmd(self, x: float, y: float, z: float, r: float, mode: MODE_PTP) -> Message:
         msg = Message()
         msg.id = 84
         msg.ctrl = 0x03
@@ -164,19 +169,19 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('f', r)))
         return self._send_command(msg)
 
-    def _set_queued_cmd_start_exec(self):
+    def _set_queued_cmd_start_exec(self) -> Message:
         msg = Message()
         msg.id = 240
         msg.ctrl = 0x01
         return self._send_command(msg)
 
-    def _set_queued_cmd_clear(self):
+    def _set_queued_cmd_clear(self) -> Message:
         msg = Message()
         msg.id = 245
         msg.ctrl = 0x01
         return self._send_command(msg)
 
-    def _set_ptp_joint_params(self, v_x, v_y, v_z, v_r, a_x, a_y, a_z, a_r):
+    def _set_ptp_joint_params(self, v_x: float, v_y: float, v_z: float, v_r: float, a_x: float, a_y: float, a_z: float, a_r: float) -> Message:
         msg = Message()
         msg.id = 80
         msg.ctrl = 0x03
@@ -191,7 +196,7 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('f', a_r)))
         return self._send_command(msg)
 
-    def _set_ptp_coordinate_params(self, velocity, acceleration):
+    def _set_ptp_coordinate_params(self, velocity: float, acceleration: float) -> Message:
         msg = Message()
         msg.id = 81
         msg.ctrl = 0x03
@@ -202,7 +207,7 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('f', acceleration)))
         return self._send_command(msg)
 
-    def _set_ptp_jump_params(self, jump, limit):
+    def _set_ptp_jump_params(self, jump: float, limit: float) -> Message:
         msg = Message()
         msg.id = 82
         msg.ctrl = 0x03
@@ -211,7 +216,7 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('f', limit)))
         return self._send_command(msg)
 
-    def _set_ptp_common_params(self, velocity, acceleration):
+    def _set_ptp_common_params(self, velocity: float, acceleration: float) -> Message:
         msg = Message()
         msg.id = 83
         msg.ctrl = 0x03
@@ -220,7 +225,7 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('f', acceleration)))
         return self._send_command(msg)
 
-    def _set_end_effector_suction_cup(self, enable=False):
+    def _set_end_effector_suction_cup(self, enable: bool = False) -> Message:
         msg = Message()
         msg.id = 62
         msg.ctrl = 0x03
@@ -232,7 +237,7 @@ class Dobot():
             msg.params.extend(bytearray([0x00]))
         return self._send_command(msg)
 
-    def _set_end_effector_gripper(self, enable=False):
+    def _set_end_effector_gripper(self, enable: bool = False) -> Message:
         msg = Message()
         msg.id = 63
         msg.ctrl = 0x03
@@ -244,7 +249,7 @@ class Dobot():
             msg.params.extend(bytearray([0x00]))
         return self._send_command(msg)
 
-    def _set_stepper_motor(self, speed, interface=0, motor_control=True):
+    def _set_stepper_motor(self, speed: float, interface: int = 0, motor_control: bool = True) -> Message:
         msg = Message()
         msg.id = 0x87
         msg.ctrl = 0x03
@@ -260,39 +265,49 @@ class Dobot():
         msg.params.extend(bytearray(struct.pack('i', int(speed))))
         return self._send_command(msg)
 
-    def conveyor_belt(self, speed: float, direction: Literal[1, -1] = 1, interface=0):
+    def conveyor_belt(self, speed: float, direction: Literal[1, -1] = 1, interface=0) -> None:
+        "Configure the conveyor belt speed and direction"
+
         if 0.0 <= speed <= 1.0 and (direction == 1 or direction == -1):
             motor_speed = 70 * speed * STEP_PER_CIRCLE / MM_PER_CIRCLE * direction
             self._set_stepper_motor(motor_speed, interface)
         else:
             raise DobotException("Wrong Parameter")
 
-    def speed(self, velocity=100., acceleration=100.):
+    def speed(self, velocity: float = 100., acceleration: float = 100.) -> None:
+        "Configure the speed of the robot"
+
         self._set_ptp_common_params(velocity, acceleration)
         self._set_ptp_coordinate_params(velocity, acceleration)
 
-    def wait(self, ms):
+    def wait(self, ms) -> None:
+        "Let bot wait for certain time"
+
         self._set_wait_cmd(ms)
 
-    def _set_wait_cmd(self, ms):
+    def _set_wait_cmd(self, ms: int) -> Message:
         msg = Message()
         msg.id = 110
         msg.ctrl = 0x03
         msg.params = bytearray(struct.pack('I', ms))
         return self._send_command(msg)
 
-    def _send_command(self, msg) -> Message:
+    def _send_command(self, msg: Message) -> Message:
         if(self._ser != None and self._ser.isOpen):
             with self._lock:
                 self._ser.reset_input_buffer()
                 self._send_message(msg)
-                msg = self._read_message()
-            if msg is None:
-                self.Log("No response")
-        return msg
+                r_msg = self._read_message()
+            if r_msg is None:
+                self.log("No response")
+                return Message()
+            else:
+                return r_msg
 
-    def _send_message(self, message):
-        self.Log("Sending: " + str(message))
+        raise DobotException("Serial port is not open")
+
+    def _send_message(self, message: Message) -> None:
+        self.log("Sending: " + str(message))
         if(self._ser != None and self._ser.isOpen()):
             with self._lock:
                 self._ser.write(message.bytes())
@@ -322,8 +337,10 @@ class Dobot():
                 return msg
         return None
 
-    def Delay(self, delay: Optional[float] = None):
+    def delay(self, delay: Optional[float] = None) -> None:
+        "Wait for certain amount of time, if no delay is given, wait bots default delay"
+
         if delay:
             sleep(delay)
         else:
-            sleep(self.delay)
+            sleep(self.sleep_delay)
