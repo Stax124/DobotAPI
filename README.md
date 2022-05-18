@@ -99,11 +99,11 @@ You will need the bot of course, and system runing Linux (tested on x86_64)
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Stax124/Trinity-V2
+   git clone https://github.com/Stax124/DobotAPI
    ```
-2. Run the bot
+2. Run the app
    ```sh
-   python3 main.py [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-f FILE] [--token TOKEN]
+   python3 example.py
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
