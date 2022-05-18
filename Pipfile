@@ -17,4 +17,4 @@ autopep8 = "*"
 python_version = "3.9"
 
 [scripts]
-docs = "python -m pdoc -o docs core/dobot.py"
+docs = "python -m pdoc -o docs core/"
