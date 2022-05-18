@@ -86,7 +86,7 @@ Library for [Dobot Magican](https://www.dobot.cc/dobot-magician/product-overview
 
 ## Getting Started
 
-You will need the bot of course, and system runing Linux (tested on x86_64)
+You will need the dobot of course, and system runing Linux (tested on x86_64)
 
 ### Prerequisites
 
