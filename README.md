@@ -109,16 +109,16 @@ Project Link: [https://github.com/Stax124/DobotAPI](https://github.com/Stax124/D
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[contributors-shield]: https://img.shields.io/github/contributors/Stax124/Trinity-V2.svg?style=for-the-badge
-[contributors-url]: https://github.com/Stax124/Trinity-V2/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Stax124/Trinity-V2.svg?style=for-the-badge
-[forks-url]: https://github.com/Stax124/Trinity-V2/network/members
-[stars-shield]: https://img.shields.io/github/stars/Stax124/Trinity-V2.svg?style=for-the-badge
-[stars-url]: https://github.com/Stax124/Trinity-V2/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Stax124/Trinity-V2.svg?style=for-the-badge
-[issues-url]: https://github.com/Stax124/Trinity-V2/issues
-[license-shield]: https://img.shields.io/github/license/Stax124/Trinity-V2.svg?style=for-the-badge
-[license-url]: https://github.com/Stax124/Trinity-V2/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Stax124/DobotAPI.svg?style=for-the-badge
+[contributors-url]: https://github.com/Stax124/DobotAPI/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Stax124/DobotAPI.svg?style=for-the-badge
+[forks-url]: https://github.com/Stax124/DobotAPI/network/members
+[stars-shield]: https://img.shields.io/github/stars/Stax124/DobotAPI.svg?style=for-the-badge
+[stars-url]: https://github.com/Stax124/DobotAPI/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Stax124/DobotAPI.svg?style=for-the-badge
+[issues-url]: https://github.com/Stax124/DobotAPI/issues
+[license-shield]: https://img.shields.io/github/license/Stax124/DobotAPI.svg?style=for-the-badge
+[license-url]: https://github.com/Stax124/DobotAPI/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/tom%C3%A1%C5%A1-nov%C3%A1k-5a163321b/
 [product-screenshot]: images/screenshot.png
