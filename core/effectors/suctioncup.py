@@ -8,20 +8,20 @@ class SuctionCup:
     def __init__(self, bot: Dobot):
         self.bot = bot
 
-    def Suck(self):
+    def suck(self):
         "Starts sucking air"
 
         self.bot._suck(True)
-        self.bot.Delay()
+        self.bot.delay()
 
-    def Blow(self):
+    def blow(self):
         "Starts blowing air"
 
         self.bot._grip(False)
-        self.bot.Delay()
+        self.bot.delay()
 
-    def Idle(self):
+    def idle(self):
         "Disables effector"
 
         self.bot._suck(False)
-        self.bot.Delay()
+        self.bot.delay()

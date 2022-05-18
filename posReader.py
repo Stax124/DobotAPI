@@ -6,7 +6,7 @@ from time import sleep
 
 port = get_coms_port()
 bot = Dobot(port, True)
-bot.Connect()
+bot.connect()
 
 pos1 = Position(188, 5.5, -23, 1.65)
 pos2 = Position(186, 74.3, 77, 21.79)
@@ -20,11 +20,11 @@ def main():
     print("Dobot connected")
     bot.set_ir(True)
     while True:
-        print(bot.GetPose())
+        print(bot.get_pose())
 
 
 try:
     main()
 except KeyboardInterrupt:
-    bot.Close()
+    bot.close()
     print("Dobot disconnected")

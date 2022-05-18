@@ -6,7 +6,7 @@ import time
 
 port = get_coms_port()
 bot = Dobot(port, False)
-bot.Connect()
+bot.connect()
 
 posGrab = Position(324.22, -31.75, 14.42, -5.59)
 posRelease = Position(173.75, 268.69, 48.04, 57.11)
@@ -30,27 +30,27 @@ def main():
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)
-            bot.MoveToPosition(posGrab)
-            sucktioncup.Suck()
-            bot.MoveToPosition(posMiddle)
-            bot.MoveToPosition(posRelease)
-            sucktioncup.Blow()
-            sucktioncup.Idle()
-            bot.MoveToPosition(posMiddle)
+            bot.move_to_position(posGrab)
+            sucktioncup.suck()
+            bot.move_to_position(posMiddle)
+            bot.move_to_position(posRelease)
+            sucktioncup.blow()
+            sucktioncup.idle()
+            bot.move_to_position(posMiddle)
             lastGrab = time.time()
 
         time.sleep(0.1)
 
     else:
         print("Ur Mom Gay LOL")
-        bot.MoveToPosition(posMiddle)
-        bot.Close()
+        bot.move_to_position(posMiddle)
+        bot.close()
         print("Dobot disconnected")
 
 
 try:
     main()
 except KeyboardInterrupt:
-    bot.MoveToPosition(posMiddle)
-    bot.Close()
+    bot.move_to_position(posMiddle)
+    bot.close()
     print("Dobot disconnected")

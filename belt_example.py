@@ -4,7 +4,7 @@ import time
 
 port = get_coms_port()
 bot = Dobot(port, False)
-bot.Connect()
+bot.connect()
 
 
 def main():
@@ -25,5 +25,5 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    bot.Close()
+    bot.close()
     print("Dobot disconnected")
