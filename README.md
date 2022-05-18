@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Stax124/DobotAPI">
-    <img src="img/Trinity-V2-poster.png" alt="Logo" width="100%">
+    <img src="img/logo.png" alt="Logo" width="100%">
   </a>
 
 <h2 align="center">Trinity V2</h2>
