@@ -20,6 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
+      with:
+        python-version: '3.9.10'
 
       # ADJUST THIS: install all dependencies (including pdoc)
       - run: pip install pipenv
