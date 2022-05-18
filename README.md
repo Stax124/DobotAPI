@@ -13,10 +13,10 @@
     <img src="img/logo.png" alt="Logo" width="100%">
   </a>
 
-<h2 align="center">Trinity V2</h2>
+<h2 align="center">Dobot API</h2>
 
   <p align="center">
-    Powerful discord bot for handling economy and wars for Discord servers
+    Powerful python api for handling dobot magician and conveyor belt
     <br />
     <a href="https://github.com/Stax124/DobotAPI/issues">Report Bug</a>
     ·
