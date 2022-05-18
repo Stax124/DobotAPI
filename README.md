@@ -20,6 +20,8 @@
     <br />
     <a href="https://github.com/Stax124/DobotAPI/issues">Report Bug</a>
     ·
+    <a href="https://stax124.github.io/DobotAPI/">Documentation</a>
+    ·
     <a href="https://github.com/Stax124/DobotAPI/issues">Request Feature</a>
   </p>
 </div>
@@ -39,26 +41,6 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#commands">Commands</a>
-      <ul>
-        <li><a href="#extensions">Extensions</a></li>
-        <li><a href="#battle">Battle</a></li>
-        <li><a href="#config">Config</a></li>
-        <li><a href="#essentials">Essentials</a></li>
-        <li><a href="#expeditions">Expeditions</a></li>
-        <li><a href="#fallback">Fallback</a></li>
-        <li><a href="#income">Income</a></li>
-        <li><a href="#inventory">Inventory</a></li>
-        <li><a href="#management">Management</a></li>
-        <li><a href="#money">Money</a></li>
-        <li><a href="#owner">Owner</a></li>
-        <li><a href="#player">Player</a></li>
-        <li><a href="#playershop">PlayerShop</a></li>
-        <li><a href="#settings">Settings</a></li>
-        <li><a href="#work">Work</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
@@ -108,10 +90,6 @@ You will need the dobot of course, and system runing Linux (tested on x86_64)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- Documentation -->
-
-## Documentation
-<p align="right">(<a href="#top">back to top</a>)</p>
 <!-- LICENSE -->
 
 ## License
