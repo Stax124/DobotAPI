@@ -2,3 +2,4 @@
 .vscode/
 test.py
 .mypy_cache/
+Pipfile.lock
