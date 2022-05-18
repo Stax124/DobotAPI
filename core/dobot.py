@@ -3,7 +3,7 @@ import struct
 from time import sleep
 from typing import Any, Literal, Optional
 import serial
-from DobotMessage import Message
+from core.DobotMessage import Message
 from core.dobot_interfaces import GPIO, MODE_PTP, Joints, Pose, Position
 from core.exception_interfaces import DobotException
 from core.effectors.gripper import Gripper

@@ -2,7 +2,7 @@ from prompt_toolkit.shortcuts import (yes_no_dialog, input_dialog,
                                       message_dialog, radiolist_dialog, button_dialog)
 from prompt_toolkit.styles import Style
 from core.dobot_interfaces import Position
-from dobot import Dobot
+from core.dobot import Dobot
 from core.utils import get_coms_port
 
 style_dict = {

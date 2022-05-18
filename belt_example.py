@@ -1,4 +1,4 @@
-from dobot import Position, Dobot
+from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
 
