@@ -244,31 +244,6 @@ class Dobot():
             msg.params.extend(bytearray([0x00]))
         return self._send_command(msg)
 
-    # def set_color(self, enable=True, port=GPIO.PORT_GP2, version=0x1):
-    #     msg = Message()
-    #     msg.id = 137
-    #     msg.ctrl = 0x03
-    #     msg.params = bytearray([])
-    #     msg.params.extend(bytearray([int(enable)]))
-    #     msg.params.extend(bytearray([port]))
-    #     msg.params.extend(bytearray([version]))  # Version1=0, Version2=1
-    #     return self._extract_cmd_index(self._send_command(msg))
-
-    # def get_color(self, port=GPIO.PORT_GP2, version=0x1):
-    #     msg = Message()
-    #     msg.id = 137
-    #     msg.ctrl = 0x00
-    #     msg.params = bytearray([])
-    #     msg.params.extend(bytearray([port]))
-    #     msg.params.extend(bytearray([0x01]))
-    #     msg.params.extend(bytearray([version]))  # Version1=0, Version2=1
-    #     response = self._send_command(msg)
-    #     print(response)
-    #     r = struct.unpack_from('?', response.params, 0)[0]
-    #     g = struct.unpack_from('?', response.params, 1)[0]
-    #     b = struct.unpack_from('?', response.params, 2)[0]
-    #     return [r, g, b]
-
     def _set_stepper_motor(self, speed, interface=0, motor_control=True):
         msg = Message()
         msg.id = 0x87
