@@ -20,7 +20,7 @@ moving = False
 
 def main():
     print("Dobot connected")
-    bot.set_ir(True)
+    bot.ir_toggle(True)
     lastGrab = time.time()
     max_delay = 20
 
