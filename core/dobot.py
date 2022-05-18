@@ -63,10 +63,14 @@ class Dobot():
         self.disconnect()
 
     def log(self, message: str) -> None:
+        "Logs message to console if enabled in robot configuration"
+
         if(self.enable_logging):
             print(message)
 
     def move_to(self, x: float, y: float, z: float, r: float = 0., mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
+        "Move robot to exact coordinates"
+
         if not delay_overwrite:
             delay_overwrite = self.sleep_delay
 
@@ -76,6 +80,8 @@ class Dobot():
         return self._extract_cmd_index(cmd)
 
     def move_to_position(self, position: Position, mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
+        "Move robot to position"
+        
         if not delay_overwrite:
             delay_overwrite = self.sleep_delay
 
@@ -86,6 +92,8 @@ class Dobot():
         return self._extract_cmd_index(cmd)
 
     def get_pose(self) -> Pose:
+        "Get current position and state of joints of robot"
+        
         msg = Message()
         msg.id = 10
         response = self._send_command(msg)
@@ -281,7 +289,7 @@ class Dobot():
         self._set_ptp_coordinate_params(velocity, acceleration)
 
     def wait(self, ms) -> None:
-        "Let bot wait for certain time"
+        "Let robot wait for certain time"
 
         self._set_wait_cmd(ms)
 
