@@ -39,10 +39,25 @@ def main():
             ).run()
 
             if mode == "get_position":
+                file = None
+
+                if yes_no_dialog(
+                    title="Get Position",
+                    text="Log coords into coords.txt ?",
+                    style=style
+                ).run():
+                    file = open("coords.txt", "a", encoding="utf-8")
+                    file.write("-" * 20 + "\n")
+
                 while True:
+                    position = str(bot.get_pose().position)
+
+                    if file:
+                        file.write(position + "\n")
+
                     if yes_no_dialog(
                         title="Continue ?",
-                        text=str(bot.get_pose().position),
+                        text=position,
                         style=style
                     ).run() == False:
                         break
