@@ -62,7 +62,7 @@ class Dobot():
         self.conveyor_belt(0)
         self.disconnect()
 
-    def move_to(self, x: float, y: float, z: float, r: float = 0., mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
+    def move_to(self, x: float, y: float, z: float, r: float = 0., mode: MODE_PTP = MODE_PTP.MOVL_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         "Move robot to exact coordinates"
 
         if not delay_overwrite:
@@ -73,7 +73,7 @@ class Dobot():
         sleep(delay_overwrite)
         return self._extract_cmd_index(cmd)
 
-    def move_to_position(self, position: Position, mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
+    def move_to_position(self, position: Position, mode: MODE_PTP = MODE_PTP.MOVL_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         "Move robot to position"
 
         if not delay_overwrite:

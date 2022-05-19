@@ -10,16 +10,19 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 port = get_coms_port()
-bot = Dobot(port, execution_delay=0.25)
+bot = Dobot(port, execution_delay=0.15)
 bot.connect()
-svg = svg_handler.Handler(1)
+bot.speed(25, 25)
+svg = svg_handler.Handler(3)
 
 
 def main():
+    # TODO: Move to the first position on x,y, then move down and start drawing
+
     print("Dobot connected")
     paths = svg.get_paths()
     print(paths)
-    z = bot.get_pose().position.z
+    z = -47
     for path in paths:
         # print(len(path.points))
         for point in path.points:

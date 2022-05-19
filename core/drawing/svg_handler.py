@@ -11,6 +11,8 @@ class VectorPath(NamedTuple):
 
 
 class Handler:
+    "Handles svg and returns points and paths"
+
     def __init__(self, quality) -> None:
         self.svg = None
         self.basic_svg = """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -27,15 +29,19 @@ class Handler:
         self.load_svg(self.basic_svg, self.quality)
 
     def load_svg(self, svg, quality):
+        "Loads svg string"
+
         self.svg = svg
         doc = minidom.parseString(self.svg)
         paths = self.points_from_doc(
-            doc, density=quality, scale=1, offset=(0, 5))
+            doc, density=quality, scale=0.5, offset=(0, 5))
         doc.unlink()
         self.paths = paths
         return paths
 
     def get_paths(self) -> list[VectorPath]:
+        "Returns loaded paths"
+
         return self.paths
 
     def get_point_at(self, path, distance, scale, offset):
