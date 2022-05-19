@@ -81,7 +81,7 @@ class Dobot():
 
     def move_to_position(self, position: Position, mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         "Move robot to position"
-        
+
         if not delay_overwrite:
             delay_overwrite = self.sleep_delay
 
@@ -93,7 +93,7 @@ class Dobot():
 
     def get_pose(self) -> Pose:
         "Get current position and state of joints of robot"
-        
+
         msg = Message()
         msg.id = 10
         response = self._send_command(msg)

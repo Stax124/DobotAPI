@@ -1,5 +1,5 @@
 from prompt_toolkit.shortcuts import (yes_no_dialog, input_dialog,
-                                      message_dialog, radiolist_dialog, button_dialog)
+                                      message_dialog, radiolist_dialog)
 from prompt_toolkit.styles import Style
 from core.dobot_interfaces import Position
 from core.dobot import Dobot
@@ -19,7 +19,7 @@ def main():
     try:
         port = get_coms_port()
 
-        bot = Dobot(port, False)
+        bot = Dobot(port, True)
         bot.connect()
 
         while True:
