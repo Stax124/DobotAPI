@@ -31,6 +31,11 @@ class Position(NamedTuple):
     rotation: float
 
 
+class Position2D(NamedTuple):
+    x: float
+    y: float
+
+
 class Joints(NamedTuple):
     jointA: float
     jointB: float

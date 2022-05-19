@@ -1,4 +1,3 @@
-from engineio import Middleware
 from core.effectors.gripper import Gripper
 from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
