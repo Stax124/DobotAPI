@@ -1,6 +1,3 @@
-from engineio import Middleware
-from core.effectors.gripper import Gripper
-from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
@@ -8,8 +5,6 @@ import time
 port = get_coms_port()
 bot = Dobot(port, False)
 bot.connect()
-
-sucktioncup = SuctionCup(bot)
 
 #ReleasePosition (x=283.0964660644531, y=19.580909729003906, z=-45.90699768066406, rotation=3.9566705226898193)
 #MiddleSPosition (x=97.96730041503906, y=173.89041137695312, z=124.62773895263672, rotation=60.603729248046875)
@@ -30,17 +25,16 @@ def main():
 
     while True:
         if(not bot.get_ir()):
-            # print(time.time()-lastGrab)
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)
             bot.move_to_position(posGrab)
-            sucktioncup.suck()
+            bot.suction_cup.suck()
             bot.move_to_position(posMiddle)
             bot.move_to_position(posRelease)
-            sucktioncup.blow()
+            bot.suction_cup.blow()
             bot.move_to_position(posMiddle)
-            sucktioncup.idle()
+            bot.suction_cup.idle()
         time.sleep(0.1)
 
 

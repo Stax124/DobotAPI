@@ -1,5 +1,3 @@
-from core.effectors.gripper import Gripper
-from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
@@ -7,8 +5,6 @@ import time
 port = get_coms_port()
 bot = Dobot(port, False)
 bot.connect()
-
-sucktioncup = SuctionCup(bot)
 
 #ReleasePosition1 (x=217.86207580566406, y=149.8310546875, z=16.965282440185547, rotation=34.51760482788086)
 #ReleasePosition2 (x=208.19082641601562, y=104.1470947265625, z=17.151718139648438, rotation=26.57642936706543)
@@ -27,12 +23,9 @@ posRelease2 = Position(x=202.63885498046875, y=101.3697280883789,
 def main():
     print("Dobot connected")
     bot.ir_toggle(True)
-    lastGrab = time.time()
-    max_delay = 20
     count = 0
     while True:
         if(not bot.get_ir()):
-            # print(time.time()-lastGrab)
             bot.conveyor_belt(0, 1)
             pass
         else:
@@ -40,7 +33,7 @@ def main():
                 pass
             bot.conveyor_belt(0, 1)
             bot.move_to_position(posGrab)
-            sucktioncup.suck()
+            bot.suction_cup.suck()
             bot.move_to_position(posMiddle)
             if(count == 0):
                 bot.move_to_position(posRelease1)
@@ -48,9 +41,9 @@ def main():
             elif(count == 1):
                 bot.move_to_position(posRelease2)
                 count += 1
-            sucktioncup.blow()
+            bot.suction_cup.blow()
             bot.move_to_position(posMiddle)
-            sucktioncup.idle()
+            bot.suction_cup.idle()
             if(count == 2):
                 bot.conveyor_belt(0.25, -1)
                 count = 0

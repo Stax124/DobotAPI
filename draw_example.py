@@ -1,8 +1,6 @@
 from os import pathsep
 from time import sleep
 from core.drawing import svg_handler
-from core.effectors.gripper import Gripper
-from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import logging

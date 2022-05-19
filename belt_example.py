@@ -10,12 +10,9 @@ bot.connect()
 def main():
     print("Dobot connected")
     bot.ir_toggle(True)
-    lastGrab = time.time()
-    max_delay = 20
 
     while True:
         if(not bot.get_ir()):
-            # print(time.time()-lastGrab)
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)

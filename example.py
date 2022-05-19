@@ -1,5 +1,3 @@
-from core.effectors.gripper import Gripper
-from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
@@ -17,11 +15,6 @@ posGrab = Position(324.22, -31.75, 14.42, -5.59)
 posRelease = Position(173.75, 268.69, 48.04, 57.11)
 posMiddle = Position(239.45, 0.83, 140.17, 0.20)
 
-gripper = Gripper(bot)
-sucktioncup = SuctionCup(bot)
-
-moving = False
-
 
 def main():
     bot.ir_toggle(True)
@@ -34,11 +27,11 @@ def main():
         else:
             bot.conveyor_belt(0, 1)
             bot.move_to_position(posGrab)
-            sucktioncup.suck()
+            bot.suction_cup.suck()
             bot.move_to_position(posMiddle)
             bot.move_to_position(posRelease)
-            sucktioncup.blow()
-            sucktioncup.idle()
+            bot.suction_cup.blow()
+            bot.suction_cup.idle()
             bot.move_to_position(posMiddle)
             lastGrab = time.time()
 
