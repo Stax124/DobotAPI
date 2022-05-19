@@ -19,8 +19,7 @@ sucktioncup = SuctionCup(bot)
 def main():
     print("Dobot connected")
     bot.ir_toggle(True)
-    while True:
-        print(bot.get_pose())
+    print(bot.get_pose())
 
 
 try:
