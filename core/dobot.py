@@ -10,6 +10,7 @@ from core.dobot_interfaces import GPIO, MODE_PTP, Joints, Pose, Position
 from core.exception_interfaces import DobotException
 from core.effectors.gripper import Gripper
 from core.effectors.suctioncup import SuctionCup
+import logging as console
 
 
 MAX_QUEUE_LEN = 32
@@ -20,20 +21,18 @@ MM_PER_CIRCLE = 3.1415926535898 * 36.0
 class Dobot():
     "Class for controlling Dobot Magician and it's accessories"
 
-    def __init__(self, port: str, enable_logging: bool = True, execution_delay: float = 1.5) -> None:
-        self.enable_logging = enable_logging
+    def __init__(self, port: str, execution_delay: float = 1.5) -> None:
         self.port = port
         self.sleep_delay = execution_delay
         self.gripper = Gripper(self)
         self.suction_cup = SuctionCup(self)
-        self.log("Dobot on port: " + port)
         self._ser = serial.Serial()
         self._lock = RLock()
 
     def connect(self) -> bool:
         "Connects to dobot and returns true if successful"
 
-        self.log("Connecting to dobot")
+        console.info("Connecting to Dobot on port: " + self.port)
         self._ser = serial.Serial(
             self.port,
             baudrate=115200,
@@ -51,7 +50,7 @@ class Dobot():
     def disconnect(self) -> None:
         "Disconnects robot"
 
-        self.log("Disconnecting dobot")
+        console.info("Disconnecting dobot")
         if(not self._ser == None and self._ser.isOpen()):
             self._ser.close()
 
@@ -62,12 +61,6 @@ class Dobot():
         self._suck(False)
         self.conveyor_belt(0)
         self.disconnect()
-
-    def log(self, message: str) -> None:
-        "Logs message to console if enabled in robot configuration"
-
-        if(self.enable_logging):
-            print(message)
 
     def move_to(self, x: float, y: float, z: float, r: float = 0., mode: MODE_PTP = MODE_PTP.MOVJ_XYZ, delay_overwrite: Optional[float] = None) -> Any:
         "Move robot to exact coordinates"
@@ -159,7 +152,7 @@ class Dobot():
         msg.params.extend(bytearray([0x01]))
         msg.params.extend(bytearray([0x1]))  # Version1=0, Version2=1
         response = self._send_command(msg)
-        self.log(str(response))
+        console.debug(str(response))
         state = struct.unpack_from('?', response.params, 0)[0]
         return state
 
@@ -308,7 +301,7 @@ class Dobot():
                 self._send_message(msg)
                 r_msg = self._read_message()
             if r_msg is None:
-                self.log("No response")
+                console.debug("No response")
                 return Message()
             else:
                 return r_msg
@@ -316,7 +309,7 @@ class Dobot():
         raise DobotException("Serial port is not open")
 
     def _send_message(self, message: Message) -> None:
-        self.log("Sending: " + str(message))
+        console.debug("Sending: " + str(message))
         if(self._ser != None and self._ser.isOpen()):
             with self._lock:
                 self._ser.write(message.bytes())

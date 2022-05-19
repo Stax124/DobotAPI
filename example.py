@@ -3,6 +3,11 @@ from core.effectors.suctioncup import SuctionCup
 from core.dobot import Position, Dobot
 from core.utils import get_coms_port
 import time
+import coloredlogs
+import logging as console
+
+coloredlogs.install(level=console.DEBUG,
+                    fmt="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
 
 port = get_coms_port()
 bot = Dobot(port, False)
@@ -19,14 +24,12 @@ moving = False
 
 
 def main():
-    print("Dobot connected")
     bot.ir_toggle(True)
     lastGrab = time.time()
     max_delay = 20
 
     while time.time()-lastGrab < max_delay:
         if(not bot.get_ir()):
-            # print(time.time()-lastGrab)
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)
@@ -42,10 +45,8 @@ def main():
         time.sleep(0.1)
 
     else:
-        print("Ur Mom Gay LOL")
         bot.move_to_position(posMiddle)
         bot.close()
-        print("Dobot disconnected")
 
 
 try:
@@ -53,4 +54,3 @@ try:
 except KeyboardInterrupt:
     bot.move_to_position(posMiddle)
     bot.close()
-    print("Dobot disconnected")
