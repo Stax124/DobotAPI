@@ -1,3 +1,5 @@
+"Main library for Dobot"
+
 from multiprocessing import RLock
 import struct
 from time import sleep
@@ -27,7 +29,6 @@ class Dobot():
         self.log("Dobot on port: " + port)
         self._ser = serial.Serial()
         self._lock = RLock()
-        pass
 
     def connect(self) -> bool:
         "Connects to dobot and returns true if successful"

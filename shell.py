@@ -1,3 +1,5 @@
+"Shell for quick testing of the Dobot"
+
 from prompt_toolkit.shortcuts import (yes_no_dialog, input_dialog,
                                       message_dialog, radiolist_dialog)
 from prompt_toolkit.styles import Style
@@ -104,10 +106,10 @@ def main():
                 bot.close()
                 return
 
-    except Exception as e:
+    except Exception as exception:
         message_dialog(
             title="Dobot shell",
-            text=str(e),
+            text=str(exception),
             style=style
         ).run()
 
