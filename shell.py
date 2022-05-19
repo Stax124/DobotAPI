@@ -18,6 +18,8 @@ style = Style.from_dict(style_dict)
 
 
 def main():
+    "Default main function"
+
     try:
         port = get_coms_port()
 
@@ -59,7 +61,7 @@ def main():
                         title="Continue ?",
                         text=position,
                         style=style
-                    ).run() == False:
+                    ).run() is False:
                         break
 
             elif mode == "set_position":
@@ -115,7 +117,24 @@ def main():
                     text="Enter speed",
                     style=style
                 ).run()
-                bot.conveyor_belt(float(speed))
+
+                forward = yes_no_dialog(
+                    title="Dobot shell",
+                    text="Forward ?",
+                    style=style
+                ).run()
+
+                interface = input_dialog(
+                    title="Dobot shell",
+                    text="Enter interface [0 (default), 1]",
+                    style=style
+                ).run()
+
+                forward = 1 if forward else -1
+                interface = int(interface) if interface else 0
+
+                bot.conveyor_belt(
+                    float(speed), direction=forward, interface=interface)
 
             elif mode == "exit":
                 bot.close()
