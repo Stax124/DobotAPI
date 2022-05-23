@@ -8,7 +8,7 @@ coloredlogs.install(level=console.DEBUG,
                     fmt="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
 
 port = get_coms_port()
-bot = Dobot(port, False)
+bot = Dobot(port)
 bot.connect()
 
 posGrab = Position(324.22, -31.75, 14.42, -5.59)

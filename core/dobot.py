@@ -156,6 +156,15 @@ class Dobot():
         state = struct.unpack_from('?', response.params, 0)[0]
         return state
 
+    def get_alarms(self):
+        "Get alarm state of robot"
+
+        response = self._get_alarms()
+        console.debug("Response:" + str(response))
+        alarms = struct.unpack_from('I', response.params, 0)
+        console.debug("Alarms:" + str(alarms))
+        return alarms
+
     def _extract_cmd_index(self, response: Message) -> Any:
         return struct.unpack_from('I', response.params, 0)[0]
 
@@ -216,6 +225,11 @@ class Dobot():
         msg.params = bytearray([])
         msg.params.extend(bytearray(struct.pack('f', jump)))
         msg.params.extend(bytearray(struct.pack('f', limit)))
+        return self._send_command(msg)
+
+    def _get_alarms(self) -> Message:
+        msg = Message()
+        msg.id = 20
         return self._send_command(msg)
 
     def _set_ptp_common_params(self, velocity: float, acceleration: float) -> Message:
