@@ -1,7 +1,4 @@
-from asyncio.windows_events import NULL
 import python3_midi as md
-import numpy as np
-import time as t
 from rich.pretty import pprint
 from core.dobot import Dobot
 from core.utils import get_coms_port
@@ -9,9 +6,9 @@ from core.dobot_interfaces import Position
 port = get_coms_port()
 pprint(port)
 
-bot = Dobot(port, execution_delay=0.4)
+bot = Dobot(port, execution_delay=0.30)
 bot.connect()
-bot.speed(velocity=300, acceleration=300)
+bot.speed(velocity=600, acceleration=600)
 pattern = md.read_midifile(
     "C:\\Users\\Admin\\Documents\\midi_dobot\\midi_dobot.mid")[1]
 
