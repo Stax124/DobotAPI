@@ -5,3 +5,4 @@ test.py
 Pipfile.lock
 poetry.lock
 test/
+config.json

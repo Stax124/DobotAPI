@@ -11,7 +11,7 @@ from core.exception_interfaces import DobotException
 from core.effectors.gripper import Gripper
 from core.effectors.suctioncup import SuctionCup
 import logging as console
-
+import codecs
 
 MAX_QUEUE_LEN = 32
 STEP_PER_CIRCLE = 360.0 / 1.8 * 10.0 * 16.0
@@ -128,6 +128,28 @@ class Dobot():
 
         sleep(delay_overwrite)
         return self._extract_cmd_index(response)
+
+    def get_name(self):
+        "Returns version of dobot"
+
+        msg = Message()
+        msg.id = 1
+        response = self._send_command(msg)
+        hex_response = struct.unpack_from('c', response.params, 0)[0]
+        return codecs.decode(hex_response, 'hex').decode('utf-8') if hex_response != b"\x00" else "Not set"
+
+    def set_name(self, name: str) -> None:
+        "Set name of dobot `! NOT FUNCTIONAL !`"
+
+        # Convert name to bytes
+        bytes_name = bytes(name, encoding="utf-8")
+        print(bytes_name)
+
+        msg = Message()
+        msg.id = 2
+        msg.params = struct.pack(
+            'c', b"\xAD")
+        self._send_command(msg)
 
     def ir_toggle(self, enable: bool = True, port: GPIO = GPIO.PORT_GP4) -> Any:
         "Turn the IR sensor on or off"

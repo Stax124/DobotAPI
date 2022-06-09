@@ -1,11 +1,13 @@
 "Shell for quick testing of the Dobot"
 
+import os
 from prompt_toolkit.shortcuts import (yes_no_dialog, input_dialog,
                                       message_dialog, radiolist_dialog)
 from prompt_toolkit.styles import Style
 from core.dobot_interfaces import Position
 from core.dobot import Dobot
 from core.utils import get_coms_port
+import json
 
 style_dict = {
     "dialog": "bg:#88ff88",
@@ -15,6 +17,17 @@ style_dict = {
 }
 
 style = Style.from_dict(style_dict)
+
+config = json.load(open("config.json")) if os.path.exists("config.json") else {
+    "midi": []
+}
+
+
+def save():
+    "Save config"
+
+    json.dump(config, open("config.json", "w", encoding="utf-8"),
+              indent=4, ensure_ascii=False)
 
 
 def main():
@@ -35,6 +48,7 @@ def main():
                         ("gripper", "Gripper"),
                         ("suction_cup", "Suction cup"),
                         ("conveyor_belt", "Conveyor belt"),
+                        ("midi", "MIDI"),
                         ("exit", "Exit")
                         ],
                 style=style
@@ -62,6 +76,9 @@ def main():
                         text=position,
                         style=style
                     ).run() is False:
+                        if file:
+                            file.close()
+
                         break
 
             elif mode == "set_position":
@@ -136,7 +153,64 @@ def main():
                 bot.conveyor_belt(
                     float(speed), direction=forward, interface=interface)
 
-            elif mode == "exit":
+            elif mode == "midi":
+                # Three options: Add song, remove song, play song
+                action = radiolist_dialog(
+                    title="Dobot shell",
+                    text="Select action",
+                    values=[("add_song", "Add song"),
+                            ("remove_song", "Remove song"),
+                            ("play_song", "Play song"),
+                            ],
+                    style=style
+                ).run()
+
+                if action == "add_song":
+
+                    while True:
+                        song = input_dialog(
+                            title="Dobot shell",
+                            text="Enter song file location",
+                            style=style
+                        ).run()
+
+                        if os.path.exists(song):
+                            config["midi"].append(song)
+                            save()
+                            break
+                        else:
+                            x = yes_no_dialog(
+                                title="Dobot shell",
+                                text="Song file not found. Continue ?",
+                                style=style
+                            ).run()
+
+                            if x is False:
+                                break
+
+                elif action == "remove_song":
+                    songs = config["midi"]
+
+                    if not songs:
+                        message_dialog(
+                            title="Dobot shell",
+                            text="No songs to remove",
+                            style=style
+                        ).run()
+                        continue
+
+                    else:
+                        song = radiolist_dialog(
+                            title="Dobot shell",
+                            text="Select song",
+                            values=[(i, os.path.basename(i)) for i in songs],
+                            style=style
+                        ).run()
+
+                        config["midi"].remove(song)
+                        save()
+
+            else:
                 bot.close()
                 return
 

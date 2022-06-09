@@ -6,7 +6,7 @@ from core.dobot_interfaces import Position
 port = get_coms_port()
 pprint(port)
 
-bot = Dobot(port, execution_delay=0.30)
+bot = Dobot(port, execution_delay=0.40)
 bot.connect()
 bot.speed(velocity=600, acceleration=600)
 pattern = md.read_midifile(
@@ -54,7 +54,7 @@ for i in notes:
         continue
     crnot = Position(c3.x - b*xoff, c3.y - b*yoff, c3.z -  # type: ignore
                      b*zoff, c3.rotation)  # type: ignore
-    crnotup = Position(crnot[0], crnot[1], crnot[2] + 11, c3.rotation)
+    crnotup = Position(crnot[0], crnot[1], crnot[2] + 20, c3.rotation)
     pprint(b)
     pprint(crnot)
     pprint(crnotup)
