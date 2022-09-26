@@ -40,5 +40,11 @@ export default defineConfig({
 			pattern:
 				"https://github.com/Stax124/DobotAPI/edit/main/vitepress/docs/:path",
 		},
+		socialLinks: [
+			{
+				icon: "github",
+				link: "https://github.com/Stax124/DobotAPI",
+			},
+		],
 	},
 });
