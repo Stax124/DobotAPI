@@ -7,7 +7,6 @@ export default defineConfig({
 	base: "https://stax124.github.io/DobotAPI/",
 	appearance: true,
 	lastUpdated: true,
-	outDir: "../../docs",
 	themeConfig: {
 		sidebar: [
 			{
