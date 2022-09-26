@@ -5,3 +5,11 @@ test.py
 Pipfile.lock
 poetry.lock
 test/
+
+# Docs
+**/node_modules/
+**/yarn.lock
+**/yarn-error.log
+
+# Distributables
+/dist

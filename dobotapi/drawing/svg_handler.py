@@ -1,8 +1,10 @@
 from importlib.resources import path
 from typing import NamedTuple
-from svg.path import parse_path
-from core.dobot_interfaces import Position2D
 from xml.dom import minidom
+
+from svg.path import parse_path
+
+from ..dobot_interfaces import Position2D
 
 
 class VectorPath(NamedTuple):
@@ -23,7 +25,6 @@ class Handler:
                     Q 90,60 50,90
                     Q 10,60 10,30 z" />
             </svg>"""
-        self.doc = None
         self.paths = []
         self.quality = quality
         self.load_svg(self.basic_svg, self.quality)
@@ -33,8 +34,7 @@ class Handler:
 
         self.svg = svg
         doc = minidom.parseString(self.svg)
-        paths = self.points_from_doc(
-            doc, density=quality, scale=0.5, offset=(0, 5))
+        paths = self.points_from_doc(doc, density=quality, scale=0.5, offset=(0, 5))
         doc.unlink()
         self.paths = paths
         return paths
@@ -59,17 +59,15 @@ class Handler:
             return
 
         for distance in range(step):
-            yield self.get_point_at(
-                path, distance / last_step, scale, offset)
+            yield self.get_point_at(path, distance / last_step, scale, offset)
 
-    def points_from_doc(self, doc, density=5., scale=1., offset=(0, 0)):
+    def points_from_doc(self, doc, density=5.0, scale=1.0, offset=(0, 0)):
         offset = offset[0] + offset[1] * 1j
         paths: list[VectorPath] = []
         for element in doc.getElementsByTagName("path"):
             points = []
             for path in parse_path(element.getAttribute("d")):
-                points.extend(self.points_from_path(
-                    path, density, scale, offset))
+                points.extend(self.points_from_path(path, density, scale, offset))
             new_points = []
             for point in points:
                 new_points.append(Position2D(point[0], point[1]))

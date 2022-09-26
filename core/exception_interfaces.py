@@ -1,2 +1,0 @@
-class DobotException(Exception):
-    pass

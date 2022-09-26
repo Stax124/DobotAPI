@@ -1,9 +1,9 @@
-from core.dobot import Position, Dobot
-from core.utils import get_coms_port
 import time
 
-port = get_coms_port()
-bot = Dobot(port, False)
+from dobotapi.dobot import Dobot
+from dobotapi.utils import get_coms_port
+
+bot = Dobot()
 bot.connect()
 
 
@@ -12,7 +12,7 @@ def main():
     bot.ir_toggle(True)
 
     while True:
-        if(not bot.get_ir()):
+        if not bot.get_ir():
             bot.conveyor_belt(0.25, 1)
         else:
             bot.conveyor_belt(0, 1)

@@ -1,14 +1,15 @@
-from core.dobot import Position, Dobot
-from core.utils import get_coms_port
-import time
-import coloredlogs
 import logging as console
+import time
 
-coloredlogs.install(level=console.DEBUG,
-                    fmt="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S")
+import coloredlogs
+from dobotapi.dobot import Dobot, Position
 
-port = get_coms_port()
-bot = Dobot(port)
+coloredlogs.install(
+    level=console.DEBUG, fmt="%(asctime)s %(levelname)s %(message)s", datefmt="%H:%M:%S"
+)
+
+
+bot = Dobot()
 bot.connect()
 
 posGrab = Position(324.22, -31.75, 14.42, -5.59)
@@ -21,16 +22,16 @@ def main():
     lastGrab = time.time()
     max_delay = 20
 
-    while time.time()-lastGrab < max_delay:
-        if(not bot.get_ir()):
-            bot.conveyor_belt(0.25, 1)
+    while time.time() - lastGrab < max_delay:
+        if not bot.get_ir():
+            bot.conveyor_belt.move(0.25)
         else:
-            bot.conveyor_belt(0, 1)
+            bot.conveyor_belt.move(0)
             bot.move_to_position(posGrab)
             bot.suction_cup.suck()
             bot.move_to_position(posMiddle)
             bot.move_to_position(posRelease)
-            bot.suction_cup.blow()
+            bot.suction_cup.suck()
             bot.suction_cup.idle()
             bot.move_to_position(posMiddle)
             lastGrab = time.time()

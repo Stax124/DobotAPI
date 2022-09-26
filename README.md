@@ -72,6 +72,7 @@ You will need the dobot of course, and system runing Linux (tested on x86_64)
 ### Prerequisites
 
 - python (3.10 tested, might run on older versions)
+
   ```sh
   sudo apt install python3 pip3
   ```
@@ -79,11 +80,10 @@ You will need the dobot of course, and system runing Linux (tested on x86_64)
 - (Windows only) Drivers for the robot
 
   https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
-  
+
   <p style="color: red">❗ The provided one that come with DobotStudio are not sufficient ❗</p>
 
   <p style="color: red">❗ Reboot after installation ❗</p>
-
 
 ### Installation
 
