@@ -1,1 +1,0 @@
-import{_ as e,c as t,o,a as s}from"./app.fe1432aa.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"shell/position.md","lastUpdated":1664223947000}'),a={name:"shell/position.md"},n=s("p",null,"WIP",-1),r=[n];function c(i,p,l,_,d,m){return o(),t("div",null,r)}const u=e(a,[["render",c]]);export{h as __pageData,u as default};
