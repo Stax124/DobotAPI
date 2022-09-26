@@ -4,7 +4,6 @@ export default defineConfig({
 	title: "DobotAPI",
 	description: "Python package for controlling Dobot Magician and it's addons",
 	lang: "en-US",
-	base: "https://stax124.github.io/DobotAPI/",
 	appearance: true,
 	lastUpdated: true,
 	themeConfig: {
