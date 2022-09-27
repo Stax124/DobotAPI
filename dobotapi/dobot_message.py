@@ -30,9 +30,9 @@ class Message:
                 if isinstance(self.params[i], int):
                     self.checksum += self.params[i]
                 else:
-                    self.checksum += int(str(self.params[i]).encode('hex'), 16)
+                    self.checksum += int(str(self.params[i]).encode("hex"), 16)
             self.checksum = self.checksum % 256
-            self.checksum = 2 ** 8 - self.checksum
+            self.checksum = 2**8 - self.checksum
             self.checksum = self.checksum % 256
             self.len = 0x02 + len(self.params)
 
@@ -41,8 +41,9 @@ class Message:
         if len(self.params) > 0:
             command = bytearray([0xAA, 0xAA, self.len, self.id, self.ctrl])
             command.extend(self.params)
-            command.append(self.checksum)
+            command.append(self.checksum)  # type: ignore
         else:
-            command = bytes([0xAA, 0xAA, self.len, self.id,
-                            self.ctrl, self.checksum])
+            command = bytes(
+                [0xAA, 0xAA, self.len, self.id, self.ctrl, self.checksum]  # type: ignore
+            )
         return command

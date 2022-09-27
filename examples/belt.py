@@ -13,9 +13,9 @@ def main():
 
     while True:
         if not bot.get_ir():
-            bot.conveyor_belt(0.25, 1)
+            bot.conveyor_belt.move(0.25)
         else:
-            bot.conveyor_belt(0, 1)
+            bot.conveyor_belt.move(0)
         time.sleep(0.1)
 
 

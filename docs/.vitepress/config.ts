@@ -6,6 +6,7 @@ export default defineConfig({
 	lang: "en-US",
 	appearance: true,
 	lastUpdated: true,
+	base: "/DobotAPI/",
 	themeConfig: {
 		sidebar: [
 			{
