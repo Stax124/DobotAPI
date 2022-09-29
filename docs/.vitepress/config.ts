@@ -39,7 +39,7 @@ export default defineConfig({
 		],
 		editLink: {
 			pattern:
-				"https://github.com/Stax124/DobotAPI/edit/main/vitepress/docs/:path",
+				"https://github.com/Stax124/DobotAPI/edit/main/docs/:path",
 		},
 		socialLinks: [
 			{
