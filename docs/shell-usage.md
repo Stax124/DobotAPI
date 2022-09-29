@@ -78,7 +78,7 @@ Operation should be instant.
 ## Conveyor Belt
 
 ::: warning
-You need to have a conveyor belt attached to the robot and the correct port for this option to work. See [Ports](/ports) for more information.
+You need to have a conveyor belt attached to the robot and the correct port for this option to work.
 :::
 
 This option allows you to control the conveyor belt of the robot. You will be asked a few questions:
