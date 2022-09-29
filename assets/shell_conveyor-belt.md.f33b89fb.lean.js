@@ -1,1 +1,0 @@
-import{_ as e,c as t,o}from"./app.695a9a7a.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"shell/conveyor-belt.md","lastUpdated":1664296950000}'),a={name:"shell/conveyor-belt.md"};function r(s,c,n,l,p,d){return o(),t("div")}const m=e(a,[["render",r]]);export{i as __pageData,m as default};
