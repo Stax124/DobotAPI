@@ -18,11 +18,11 @@ from dobotapi import Dobot
 
 bot = Dobot()
 
-bot.suction_cup.enable() # Enable the suction cup
+bot.suction_cup.suck() # Enable the suction cup
 
 os.system("pause") # Wait for the user to press any key
 
-bot.suction_cup.disable() # Disable the suction cup
+bot.suction_cup.idle() # Disable the suction cup
 
 bot.close() # Properly close the connection
 ```
@@ -41,11 +41,11 @@ from dobotapi import Dobot
 
 bot = Dobot()
 
-bot.gripper.enable() # Enable the suction cup
+bot.gripper.open() # Enable the suction cup
 
 os.system("pause") # Wait for the user to press any key
 
-bot.gripper.disable() # Disable the suction cup
+bot.gripper.close() # Disable the suction cup
 
 bot.close() # Properly close the connection
 ```

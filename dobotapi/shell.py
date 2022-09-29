@@ -1,7 +1,5 @@
 "Shell for quick testing of the Dobot"
 
-from typing import Literal
-
 from prompt_toolkit.shortcuts import (
     input_dialog,
     message_dialog,
@@ -19,7 +17,6 @@ style_dict = {
     "dialog": "bg:#88ff88",
     "dialog frame-label": "bg:#ffffff #000000",
     "dialog.body": "bg:#000000 #00ff00",
-    "dialog shadow": "bg:#00aa00",
 }
 
 style = Style.from_dict(style_dict)
@@ -55,7 +52,7 @@ def main():
                 text="Select mode",
                 values=[
                     ("get_position", "Get position"),
-                    ("set_position", "Set position"),
+                    ("set_position", "Move"),
                     ("gripper", "Gripper"),
                     ("suction_cup", "Suction cup"),
                     ("conveyor_belt", "Conveyor belt"),
@@ -132,7 +129,7 @@ def main():
 
             elif mode == "conveyor_belt":
                 speed = input_dialog(
-                    title="Dobot shell", text="Enter speed", style=style
+                    title="Dobot shell", text="Enter speed [0-1]", style=style
                 ).run()
 
                 forward = yes_no_dialog(

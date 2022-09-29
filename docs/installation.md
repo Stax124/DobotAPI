@@ -22,9 +22,7 @@ poetry add dobotapi
 pip install dobotapi
 ```
 
-## Step 2: Connecting to the robot
-
-Please, <span style="color: orange">connect the Dobot</span> to your computer and verify that your operating system can see him by doing the following.
+## Step 2: Installing Drivers
 
 ### Linux
 
@@ -32,16 +30,22 @@ Please, <span style="color: orange">connect the Dobot</span> to your computer an
 Linux kernel should be able to communicate with the robot without any additional drivers.
 :::
 
-Check your connectiviy by running the following command:
+### Windows
+
+::: warning
+Windows users will need to install drivers from [this](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) link
+:::
+
+## Step 3: Connecting to the robot
+
+Please, <span style="color: orange">connect the Dobot</span> to your computer and verify that your operating system can see him. If you are using Linux, you can check this by running the following command:
+
+### Linux
 
 ```bash
 ls /dev/ttyUSB*
 ```
 
 ### Windows
-
-::: warning
-Windows users will need to install drivers from [this](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) link
-:::
 
 Press `Win+X` on your keyboard and select `Device Manager`. You should see a device called `Silicon Labs`. If you see this, your drivers are <i>probably</i> installed correctly.

@@ -29,12 +29,12 @@ export default defineConfig({
 			},
 			{
 				text: "Shell",
-				items: [
-					{ text: "Position", link: "/shell/position" },
-					{ text: "Effectors", link: "/shell/effectors" },
-					{ text: "Conveyor belt", link: "/shell/conveyor-belt" },
-				],
+				items: [{ text: "Usage", link: "/shell-usage" }],
 				collapsible: true,
+			},
+			{
+				text: "Troubleshooting",
+				items: [{ text: "Troubleshooting", link: "/troubleshooting" }],
 			},
 		],
 		editLink: {
