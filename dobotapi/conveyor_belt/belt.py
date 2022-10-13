@@ -16,6 +16,7 @@ MM_PER_CIRCLE = 3.1415926535898 * 36.0
 class ConveyorBelt:
     def __init__(self, bot: Dobot):
         self.bot = bot
+        self.current_speed: float = 0
 
     def move(self, speed: float, interface: Literal[0, 1] = 0) -> None:
         "Run conveyor belt at speed ranging from `-1.0` to `1.0`"
@@ -25,14 +26,16 @@ class ConveyorBelt:
 
         if 0.0 <= speed <= 1.0 and (direction == 1 or direction == -1):
             motor_speed = 70 * speed * STEP_PER_CIRCLE / MM_PER_CIRCLE * direction
+            self.current_speed = speed
             self._set_stepper_motor(motor_speed, interface)
         else:
             raise DobotException("Speed must be between -1.0 and 1.0")
 
     def idle(self):
-        "Closes Gripper and sets pneu to idle state"
+        "Stops the conveyor belt"
 
-        self.bot.delay()
+        self.move(speed=0)
+        self.current_speed = 0
 
     def _set_stepper_motor(
         self, speed: float, interface: int = 0, motor_control: bool = True

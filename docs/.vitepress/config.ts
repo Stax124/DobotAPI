@@ -34,12 +34,14 @@ export default defineConfig({
 			},
 			{
 				text: "Troubleshooting",
-				items: [{ text: "Troubleshooting", link: "/troubleshooting" }],
+				items: [
+					{ text: "Troubleshooting", link: "/troubleshooting" },
+					{ text: "Ports", link: "/ports" },
+				],
 			},
 		],
 		editLink: {
-			pattern:
-				"https://github.com/Stax124/DobotAPI/edit/main/docs/:path",
+			pattern: "https://github.com/Stax124/DobotAPI/edit/main/docs/:path",
 		},
 		socialLinks: [
 			{

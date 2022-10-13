@@ -22,7 +22,7 @@ logger = getLogger(__name__)
 
 
 class Dobot:
-    "Class for controlling Dobot Magician and it's accessories"
+    "Main class for controlling Dobot Magician and it's accessories"
 
     def __init__(
         self, port: Optional[str] = None, execution_delay: float = 1.5

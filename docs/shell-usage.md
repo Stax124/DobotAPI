@@ -16,7 +16,7 @@ python -m dobotapi.shell
 If some error occurs, please refer to [Troubleshooting](/troubleshooting) guide.
 :::
 
-At this point, you should see a menu with a few options. Navigate through the menu with the arrow keys and press `Enter` or `Space` to select an option.
+At this point, you should see a menu with a few options. Navigate through the menu with the <span style="color: gold">arrow keys</span> and press `Enter` or `Space` to select an option.
 
 To continue, you need to press `Tab` to focus the other elements of the menu. Then, you can press `Enter` or `Space` to select an option.
 
@@ -52,7 +52,7 @@ where `x`, `y`, `z` are the coordinates of the position you want to move to and 
 ## Gripper
 
 ::: warning
-You need to have a gripper attached to the robot and the correct port for this option to work.
+You need to have a gripper attached to the robot and the correct port for this option to work. See [Ports](/ports) for more information.
 :::
 
 This option allows you to control the gripper of the robot. You can select one of the following options:
@@ -65,7 +65,7 @@ Operation should be instant.
 ## Suction Cup
 
 ::: warning
-You need to have a suction cup attached to the robot and the correct port for this option to work.
+You need to have a suction cup attached to the robot and the correct port for this option to work. See [Ports](/ports) for more information.
 :::
 
 This option allows you to control the suction cup of the robot. You can select one of the following options:
@@ -78,7 +78,7 @@ Operation should be instant.
 ## Conveyor Belt
 
 ::: warning
-You need to have a conveyor belt attached to the robot and the correct port for this option to work.
+You need to have a conveyor belt attached to the robot and the correct port for this option to work. See [Ports](/ports) for more information.
 :::
 
 This option allows you to control the conveyor belt of the robot. You will be asked a few questions:
