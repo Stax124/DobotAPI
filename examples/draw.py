@@ -1,7 +1,7 @@
 import logging
 
 from dobotapi.dobot import Dobot
-from dobotapi.drawing.svg_handler import Handler as SVGHandler
+from dobotapi.drawing.svg_handler import SVGHandler as SVGHandler
 
 logging.basicConfig(level=logging.DEBUG)
 

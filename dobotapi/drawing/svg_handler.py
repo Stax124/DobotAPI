@@ -12,10 +12,10 @@ class VectorPath(NamedTuple):
     points: list[Position2D]
 
 
-class Handler:
+class SVGHandler:
     "Handles svg and returns points and paths"
 
-    def __init__(self, quality) -> None:
+    def __init__(self, quality: float) -> None:
         self.svg = None
         self.basic_svg = """<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <path fill="none" stroke="red"
@@ -29,7 +29,7 @@ class Handler:
         self.quality = quality
         self.load_svg(self.basic_svg, self.quality)
 
-    def load_svg(self, svg, quality):
+    def load_svg(self, svg, quality: float):
         "Loads svg string"
 
         self.svg = svg

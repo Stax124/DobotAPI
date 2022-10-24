@@ -2,12 +2,16 @@
 name = "dobotapi"
 version = "0.0.1"
 description = "Python API for controlling Dobot Magician and it's addons"
-authors = ["Stax124, JustABenda"]
+authors = [
+    "Stax124 <tamoncz@gmail.com>",
+    "JustABenda <benda.filip.fb@gmail.com>",
+]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/Stax124/DobotAPI"
 repository = "https://github.com/Stax124/DobotAPI"
-documentation = "stax124.github.io/DobotAPI/"
+documentation = "https://stax124.github.io/DobotAPI/"
+keywords = ["dobot", "magician", "api", "python"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -19,7 +23,7 @@ coloredlogs = "^15.0.1"
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.6.0"
 poethepoet = "^0.16.2"
-black = {version = "^22.8.0", allow-prereleases = true}
+black = { version = "^22.8.0", allow-prereleases = true }
 
 
 [build-system]
