@@ -67,34 +67,7 @@ Library for [Dobot Magican](https://www.dobot.cc/dobot-magician/product-overview
 
 ## Getting Started
 
-You will need the dobot of course, and system runing Linux (tested on x86_64)
-
-### Prerequisites
-
-- python (3.10 tested, might run on older versions)
-
-  ```sh
-  sudo apt install python3 pip3
-  ```
-
-- (Windows only) Drivers for the robot
-
-  https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
-
-  <p style="color: red">❗ The provided one that come with DobotStudio are not sufficient ❗</p>
-
-  <p style="color: red">❗ Reboot after installation ❗</p>
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Stax124/DobotAPI
-   ```
-2. Run the app
-   ```sh
-   python3 example.py
-   ```
+See [https://stax124.github.io/DobotAPI](https://stax124.github.io/DobotAPI)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
