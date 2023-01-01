@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as a,b as r}from"./app.d1533b0f.js";const u=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"addons/engraver.md","lastUpdated":1666634720000}'),s={name:"addons/engraver.md"},n=r("p",null,"WIP",-1),o=[n];function c(d,_,p,i,l,m){return a(),t("div",null,o)}const h=e(s,[["render",c]]);export{u as __pageData,h as default};
