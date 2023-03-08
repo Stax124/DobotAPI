@@ -31,4 +31,4 @@ class Gripper:
     def close(self) -> None:
         "Closes gripper"
 
-        self._grip(False)
+        self._grip(True)
