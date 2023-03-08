@@ -34,6 +34,7 @@ This tutorial will teach you how to connect and control the robot <span style="c
 from dobotapi import Dobot
 
 bot = Dobot()
+bot.connect()
 bot.close()
 ```
 
