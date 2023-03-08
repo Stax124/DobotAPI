@@ -19,6 +19,7 @@ from time import sleep
 from dobotapi import Dobot
 
 bot = Dobot()
+bot.connect()
 
 # Speed can range from -1.0 to 1.0 (negative values move the belt in the opposite direction)
 bot.conveyor_belt.move(speed=1.0)

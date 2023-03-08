@@ -17,6 +17,7 @@ import os
 from dobotapi import Dobot
 
 bot = Dobot()
+bot.connect()
 
 bot.suction_cup.suck() # Enable the suction cup
 
@@ -40,6 +41,7 @@ import os
 from dobotapi import Dobot
 
 bot = Dobot()
+bot.connect()
 
 bot.gripper.open() # Enable the suction cup
 
