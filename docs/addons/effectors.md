@@ -25,7 +25,7 @@ os.system("pause") # Wait for the user to press any key
 
 bot.suction_cup.idle() # Disable the suction cup
 
-bot.close() # Properly close the connection
+bot.close() # Properly close the connection, also disables the suction cup
 ```
 
 ## Gripper
@@ -51,7 +51,7 @@ bot.gripper.close() # Close the gripper
 
 os.system("pause") # Wait for the user to press any key
 
-bot.gripper.idle() # Return gripper to idle
+bot.gripper.idle() # Return the gripper to idle
 
-bot.close() # Properly close the connection
+bot.close() # Properly close the connection, also returns the gripper to idle
 ```

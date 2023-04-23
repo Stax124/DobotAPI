@@ -65,7 +65,7 @@ class Dobot:
     def close(self) -> None:
         "Exits the dobot program properly"
 
-        self.gripper.close()
+        self.gripper.idle()
         self.suction_cup.idle()
         self.conveyor_belt.move(0)
         self._disconnect()

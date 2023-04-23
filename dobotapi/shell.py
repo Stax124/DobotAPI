@@ -102,6 +102,7 @@ def main():
                     values=[
                         ("open", "Open"),
                         ("close", "Close"),
+                        ("idle", "Idle")
                     ],
                     style=style,
                 ).run()
@@ -110,6 +111,8 @@ def main():
                     bot.gripper.open()
                 elif action == "close":
                     bot.gripper.close()
+                elif action == "idle":
+                    bot.gripper.idle()
 
             elif mode == "suction_cup":
                 action = radiolist_dialog(
