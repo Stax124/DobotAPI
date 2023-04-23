@@ -43,11 +43,15 @@ from dobotapi import Dobot
 bot = Dobot()
 bot.connect()
 
-bot.gripper.open() # Enable the suction cup
+bot.gripper.open() # Open the gripper
 
 os.system("pause") # Wait for the user to press any key
 
-bot.gripper.close() # Disable the suction cup
+bot.gripper.close() # Close the gripper
+
+os.system("pause") # Wait for the user to press any key
+
+bot.gripper.idle() # Return gripper to idle
 
 bot.close() # Properly close the connection
 ```
