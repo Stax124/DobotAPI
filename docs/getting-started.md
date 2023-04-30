@@ -38,6 +38,10 @@ bot.connect()
 bot.close()
 ```
 
+::: info
+`bot.close()` returns the gripper addon and the suction cup to idle, and stops the conveyor belt.
+:::
+
 Try running it, if you see no errors, you are ready to go to the next step.
 
 ::: details Specifying the port manually

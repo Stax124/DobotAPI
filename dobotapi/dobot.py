@@ -65,7 +65,7 @@ class Dobot:
     def close(self) -> None:
         "Exits the dobot program properly"
 
-        self.gripper.close()
+        self.gripper.idle()
         self.suction_cup.idle()
         self.conveyor_belt.move(0)
         self._disconnect()
@@ -253,18 +253,6 @@ class Dobot:
         msg.params = bytearray([])
         msg.params.extend(bytearray(struct.pack("f", velocity)))
         msg.params.extend(bytearray(struct.pack("f", acceleration)))
-        return self._send_command(msg)
-
-    def _set_end_effector_gripper(self, enable: bool = False) -> Message:
-        msg = Message()
-        msg.id = 63
-        msg.ctrl = 0x03
-        msg.params = bytearray([])
-        msg.params.extend(bytearray([0x01]))
-        if enable is True:
-            msg.params.extend(bytearray([0x01]))
-        else:
-            msg.params.extend(bytearray([0x00]))
         return self._send_command(msg)
 
     def speed(self, velocity: float = 100.0, acceleration: float = 100.0) -> None:
